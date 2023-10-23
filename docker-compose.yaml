@@ -18,6 +18,10 @@ services:
       - 'mongodb'
       - 'rabbitmq'
     restart: on-failure
+    volumes: 
+      - ./api:/app
+      - /app/node_modules
+
     # links: 
     #   'rabbitmq'
   posts:
@@ -29,6 +33,9 @@ services:
       - 'mongodb'
       - 'rabbitmq'
     restart: on-failure
+    volumes: 
+      - ./posts:/app
+      - /app/node_modules
   users:
     build:
       context: users
@@ -37,5 +44,8 @@ services:
     depends_on:
       - 'mongodb'
     restart: on-failure
+    volumes: 
+      - ./users:/app
+      - /app/node_modules
     # links: 
     #   'rabbitmq'

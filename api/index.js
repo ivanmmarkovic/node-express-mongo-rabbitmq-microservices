@@ -8,7 +8,7 @@ app.use('/posts', postRouter);
 app.use('/users', userRouter);
 
 app.get('/', async (req, res, next) => {
-    return res.json({ message: 'Hi' });
+    return res.json({ message: 'Hi, live reloading' });
 });
 
 
