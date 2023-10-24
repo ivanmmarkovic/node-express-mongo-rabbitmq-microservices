@@ -7,8 +7,8 @@ services:
       - 27017:27017
   rabbitmq:
     image: rabbitmq:latest
-    ports:
-      - 5672:5672
+    # ports:
+    #   - 5672:5672
   api:
     build:
       context: api
@@ -23,8 +23,8 @@ services:
   posts:
     build:
       context: posts
-    ports:
-      - 4000:4000
+    # ports:
+    #   - 4000:4000
     depends_on:
       - 'mongodb'
       - 'rabbitmq'
@@ -32,8 +32,8 @@ services:
   users:
     build:
       context: users
-    ports:
-      - 3000:3000
+    # ports:
+    #   - 3000:3000
     depends_on:
       - 'mongodb'
     restart: on-failure
