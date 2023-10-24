@@ -6,6 +6,8 @@ const {getApiToPostsChannel, apiToPostsQueue} = require('../connect');
 
 const createPost = async (req, res, next) => {
     let post = req.body;
+    let userId = req.user.id;
+    post.userId = userId;
 
     let uuid = v4();
     let action = 'CREATE_POST';

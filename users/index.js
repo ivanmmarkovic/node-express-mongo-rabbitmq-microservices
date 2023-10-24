@@ -13,6 +13,9 @@ mongoose.connect('mongodb://mongodb:27017/users?authSource=admin', {
     useUnifiedTopology: true 
 });
 
+global.jwtKey = "secret"; 
+global.jwtExpires = 24 * 60 * 60 * 1000;
+
 
 app.get('/users', userController.getAllUsers);
 
@@ -23,6 +26,9 @@ app.post('/users', userController.createUser);
 app.patch('/users/:id', userController.patchUserById);
 
 app.delete('/users/:id', userController.deleteUserById);
+
+
+app.post('/signin', userController.signin);
 
 app.use((err, req, res, next) => { 
     return res.status(500).json({responseData: null, errorMessage: 'Internal server error'});

@@ -1,5 +1,6 @@
 
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const UserModel = require('./model');
 const { handleErrors } = require('./utils');
@@ -84,10 +85,34 @@ const deleteUserById = async (req, res, next) => {
     }
 };
 
+const signin = async (req, res, next) => {
+    try {
+        let {email, password} = req.body;
+        let user = await UserModel.findOne({email});
+        if(user == null){
+            return res.status(404).json({responseData: null, errorMessage: 'User not found'});
+        }
+        let matches = await bcrypt.compare(password, user.password);
+        if(!matches){
+            return res.status(400).json({message: 'Invalid password'});
+        }
+        console.log('------------------------------------------', matches);
+        let token = jwt.sign({name: user.name, id: user._id}, global.jwtKey, {
+            algorithm: "HS256",
+            expiresIn: global.jwtExpires
+        });
+        return res.status(200).json({responseData: token, errorMessage: null});
+    } catch (error) {
+        console.log('??????????????????????????????????',error.message);
+        next(error);
+    }
+};
+
 module.exports = {
     createUser,
     getAllUsers,
     getUserById,
     patchUserById,
-    deleteUserById
+    deleteUserById,
+    signin
 }

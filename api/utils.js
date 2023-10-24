@@ -2,6 +2,31 @@ const {request, get} = require('http');
 
 const {USERS_MICROSERVICE} = require('./constants');
 
+const signinUtil = (payload) => {
+    return new Promise((resolve, reject) => {
+        let {protocol, host, port} = USERS_MICROSERVICE;
+        const req = request({
+            protocol,
+            host,
+            port,
+            path: '/signin',
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }, res => {
+            res.on('data', data => {
+                let {responseData, errorMessage} = JSON.parse(data.toString());
+                resolve({status: res.statusCode, responseData, errorMessage});
+            });
+            res.on('error', error => reject({status: 503, responseData: null, errorMessage: 'Service Unavailable'}));
+        });
+        req.end(JSON.stringify(payload));
+        req.on('error', error => reject({status: 503, responseData: null, errorMessage: 'Service Unavailable'}));
+    });
+};
+
 const getUsersUtil = () => {
     return new Promise((resolve, reject) => {
         let {protocol, host, port} = USERS_MICROSERVICE;
@@ -110,5 +135,6 @@ module.exports = {
     getUserByIdUtil,
     createUserUtil,
     updateUserByIdUtil,
-    deleteUserByIdUtil
+    deleteUserByIdUtil,
+    signinUtil
 };
