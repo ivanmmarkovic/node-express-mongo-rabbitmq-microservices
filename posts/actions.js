@@ -27,6 +27,9 @@ export const getPostById = async (uuid, id) => {
     let status, message, payload;
     try {
         let o = await Post.findById(id);
+        if(o == null){
+            throw new Error('Not found');
+        }
         status = 200;
         message = 'Ok';
         payload = {

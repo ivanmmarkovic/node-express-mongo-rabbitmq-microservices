@@ -64,6 +64,7 @@ const deleteUserById = async (req, res, next) => {
     }
     try {
         let {status, responseData, errorMessage} = await deleteUserByIdUtil(id);
+        console.log(status, responseData, errorMessage);
         if(errorMessage != null){
             return res.status(status).json({error: errorMessage});
         }

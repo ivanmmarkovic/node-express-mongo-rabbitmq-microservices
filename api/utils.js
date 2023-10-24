@@ -63,7 +63,7 @@ const deleteUserByIdUtil = (id) => {
             protocol,
             host,
             port,
-            path: `/users/{id}`,
+            path: `/users/${id}`,
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json'
@@ -75,6 +75,7 @@ const deleteUserByIdUtil = (id) => {
             });
             res.on('error', error => reject({status: 503, responseData: null, errorMessage: 'Service Unavailable'}));
         });
+        req.end(null);
         req.on('error', error => reject({status: 503, responseData: null, errorMessage: 'Service Unavailable'}));
     });
 };
@@ -86,7 +87,7 @@ const updateUserByIdUtil = (id, payload) => {
             protocol,
             host,
             port,
-            path: `/users/{id}`,
+            path: `/users/${id}`,
             method: 'PATCH',
             headers: {
                 'Accept': 'application/json',

@@ -1,8 +1,7 @@
 
-
-export function handleErrors(error) {
-    let status = 500;
-    let message = 'Internal server error';
+function handleErrors(error) {
+    let status = undefined;
+    let message = undefined;
     
     if(error.message.indexOf('dup key') != -1){
         let key = error.message.substring(error.message.lastIndexOf('{') + 1, error.message.lastIndexOf(':')).trim();
@@ -23,3 +22,6 @@ export function handleErrors(error) {
 }
 
 
+module.exports = {
+    handleErrors
+};
