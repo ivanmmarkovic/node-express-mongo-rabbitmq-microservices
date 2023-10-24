@@ -16,7 +16,7 @@ export const createPost = async (uuid, post) => {
             post: o
         }
     } catch (error) {
-        status, message = handleErrors(error);
+        [status, message] = handleErrors(error);
         payload = null;
     }
     channel.sendToQueue(postsToApiQueue, Buffer.from(JSON.stringify({status, message, payload, uuid})));
@@ -33,7 +33,7 @@ export const getPostById = async (uuid, id) => {
             post: o
         }
     } catch (error) {
-        status, message = handleErrors(error);
+        [status, message] = handleErrors(error);
         payload = null;
     }
     channel.sendToQueue(postsToApiQueue, Buffer.from(JSON.stringify({status, message, payload, uuid})));
@@ -49,7 +49,7 @@ export const getAllPosts = async (uuid) => {
             posts
         }
     } catch (error) {
-        status, message = handleErrors(error);
+        [status, message] = handleErrors(error);
         payload = null;
     }
     channel.sendToQueue(postsToApiQueue, Buffer.from(JSON.stringify({status, message, payload, uuid})));
@@ -63,7 +63,7 @@ export const deletePost = async (uuid, id) => {
         message = 'Ok';
         payload = null;
     } catch (error) {
-        status, message = handleErrors(error);
+        [status, message] = handleErrors(error);
         payload = null;
     }
     channel.sendToQueue(postsToApiQueue, Buffer.from(JSON.stringify({status, message, payload, uuid})));

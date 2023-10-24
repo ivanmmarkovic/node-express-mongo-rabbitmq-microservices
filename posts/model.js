@@ -5,11 +5,11 @@ const PostSchema = new mongoose.Schema({
     title: {
         type: String,
         unique: true,
-        reqired: true
+        required: true
     },
     body: {
         type: String,
-        reqired: true
+        required: true
     }
 }, {timestamps: true});
 
