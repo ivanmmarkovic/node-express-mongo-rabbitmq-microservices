@@ -20,9 +20,7 @@ const createPost = async (req, res, next) => {
             return res.status(status).json({error: message});
         }
         let redisClient = getClient();
-        redisClient.set(responseData.id, JSON.stringify(
-            Object.assign({}, {cached: true}, {payload})
-        ), 'EX', cacheEx);
+        redisClient.set(payload.id, JSON.stringify(payload.post), 'EX', cacheEx);
         return res.status(status).json(payload);
     });
 
@@ -31,7 +29,6 @@ const createPost = async (req, res, next) => {
 
 const getPostById = async (req, res, next) => {
     let {id} = req.params;
-    // TODO return if id is not valid
     let redisClient = getClient();
     let postCache = await redisClient.get(id);
     if(postCache){
@@ -47,10 +44,8 @@ const getPostById = async (req, res, next) => {
         if(message != 'Ok'){
             return res.status(status).json({error: message});
         }
-        redisClient.set(id, JSON.stringify(
-            Object.assign({}, {cached: true}, {payload})
-        ), 'EX', cacheEx);
-        return res.status(status).json(payload);
+        redisClient.set(id, JSON.stringify(payload.post), 'EX', cacheEx);
+        return res.status(status).json(payload.post);
     });
 
 };
@@ -58,10 +53,12 @@ const getPostById = async (req, res, next) => {
 
 const getAllPosts = async (req, res, next) => {
     let redisClient = getClient();
+    /*
     let postsCache = await redisClient.get('posts');
     if(postsCache){
         return res.status(200).json(JSON.parse(postsCache)); 
     }
+    */
     let uuid = v4();
     let action = 'GET_ALL_POSTS';
 
@@ -72,10 +69,8 @@ const getAllPosts = async (req, res, next) => {
         if(message != 'Ok'){
             return res.status(status).json({error: message});
         }
-        redisClient.set('posts', JSON.stringify(
-            Object.assign({}, {cached: true}, {responseData})
-        ), 'EX', cacheEx);
-        return res.status(status).json(payload);
+        // redisClient.set('posts', JSON.stringify(payload.posts), 'EX', cacheEx);
+        return res.status(status).json(payload.posts);
     });
 
 };
@@ -94,8 +89,8 @@ const deletePost = async (req, res, next) => {
         if(message != 'Ok'){
             return res.status(status).json({error: message});
         }
-        let redisClient = getClient(id);
-        redisClient.delete(id);
+        let redisClient = getClient();
+        redisClient.set(id, JSON.stringify({}), 'EX', 10);
         return res.status(status).json(payload);
     });
 

@@ -10,7 +10,7 @@ async function limiter(req, res, next){
         let {start, requests} = ips[req.ip];
         console.log(now - start, requests);
         if((now - start)/1000 < 10){
-            if(requests >= 3){
+            if(requests >= 5){
                 return res.status(400).json({error: 'Too many requests'});
             }
             else {

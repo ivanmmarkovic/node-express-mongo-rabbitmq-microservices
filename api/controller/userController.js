@@ -40,17 +40,19 @@ const createUser = async (req, res, next) => {
 };
 
 const getAllUsers = async (req, res, next) => {
+    /*
     let redisClient = getClient();
     let usersCache = await redisClient.get('users');
     if(usersCache){
         return res.status(200).json(JSON.parse(usersCache)); 
     }
+    */
     try {
         let {status, responseData, errorMessage} = await getUsersUtil();
         if(errorMessage != null){
             return res.status(status).json({error: errorMessage});
         }
-        await redisClient.set('users', JSON.stringify(responseData), 'EX', cacheEx);
+        // await redisClient.set('users', JSON.stringify(responseData), 'EX', cacheEx);
         return res.status(status).json(responseData);  
     } catch (error) {
         next(error);
