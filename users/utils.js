@@ -9,7 +9,8 @@ function handleErrors(error) {
         message = `Duplicate key ${key}`;
     }
     if(error.message.indexOf('required') != -1){
-        let key = error.message.substring(error.message.indexOf('`') + 1, error.message.lastIndexOf('`'));
+        let index = error.message.indexOf('`') + 1;
+        let key = error.message.substring(error.message.indexOf('`') + 1, error.message.indexOf('`', index));
         status = 400;
         message = `Required field ${key}`;
     }
