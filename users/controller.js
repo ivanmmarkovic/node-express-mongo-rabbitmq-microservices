@@ -96,14 +96,12 @@ const signin = async (req, res, next) => {
         if(!matches){
             return res.status(400).json({message: 'Invalid password'});
         }
-        console.log('------------------------------------------', matches);
         let token = jwt.sign({name: user.name, id: user._id}, global.jwtKey, {
             algorithm: "HS256",
             expiresIn: global.jwtExpires
         });
         return res.status(200).json({responseData: token, errorMessage: null});
     } catch (error) {
-        console.log('??????????????????????????????????',error.message);
         next(error);
     }
 };

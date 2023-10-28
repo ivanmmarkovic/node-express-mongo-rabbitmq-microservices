@@ -58,9 +58,16 @@ export const getAllPosts = async (uuid) => {
     channel.sendToQueue(postsToApiQueue, Buffer.from(JSON.stringify({status, message, payload, uuid})));
 };
 
-export const deletePost = async (uuid, id) => {
+export const deletePost = async (uuid, id, currentUserId) => {
     let status, message, payload;
     try {
+        let o = await Post.findById(id);
+        if(o == null){
+            throw new Error('Not found');
+        }
+        if(o.userId != currentUserId){
+            throw new Error('Forbidden');
+        }
         await Post.findByIdAndDelete(id);
         status = 200;
         message = 'Ok';

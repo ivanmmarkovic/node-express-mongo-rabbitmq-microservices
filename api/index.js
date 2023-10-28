@@ -1,13 +1,16 @@
 const express = require('express');
 const app = express();
+
 const postRouter = require('./routes/postRouter');
 const userRouter = require('./routes/userRouter');
 const authRouter = require('./routes/authRouter');
+const limiter = require('./rateLimiter');
 
 global.jwtKey = "secret"; 
 global.jwtExpires = 24 * 60 * 60 * 1000;
 
 app.use(express.json());
+app.use(limiter);
 app.use('/posts', postRouter);
 app.use('/users', userRouter);
 app.use('/signin', authRouter);

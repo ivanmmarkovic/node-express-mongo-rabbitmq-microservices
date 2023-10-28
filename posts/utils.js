@@ -18,6 +18,10 @@ export function handleErrors(error) {
         status = 404;
         message = 'Not found';
     }
+    if(error.message == 'Forbidden'){
+        status = 403;
+        message = 'Forbidden';
+    }
 
     return [status, message];
 }

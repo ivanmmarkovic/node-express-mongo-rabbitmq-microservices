@@ -26,7 +26,7 @@ channel.consume(apiToPostsQueue, data => {
             getAllPosts(uuid);
             break;
         case 'DELETE_POST':
-            deletePost(uuid, payload.id);
+            deletePost(uuid, payload.id, payload.currentUserId);
         default:
             break;
     }
