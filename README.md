@@ -86,6 +86,7 @@ Implemented rate limiter - clients can't make more than 5 requests for less than
 
 
 ### Todo
+- Add logger
 - Add admin
 - Add separate (SQL)database for users microservice
 - Minio for files
