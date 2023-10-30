@@ -7,8 +7,6 @@ services:
       - 27017:27017
   rabbitmq:
     image: rabbitmq:latest
-    # ports:
-    #   - 5672:5672
   api:
     build:
       context: api
@@ -18,13 +16,9 @@ services:
       - 'mongodb'
       - 'rabbitmq'
     restart: on-failure
-    # links: 
-    #   'rabbitmq'
   posts:
     build:
       context: posts
-    # ports:
-    #   - 4000:4000
     depends_on:
       - 'mongodb'
       - 'rabbitmq'
@@ -32,22 +26,9 @@ services:
   users:
     build:
       context: users
-    # ports:
-    #   - 3000:3000
     depends_on:
       - 'mongodb'
     restart: on-failure
-    # links: 
-    #   'rabbitmq'
   redis:
     image: redis
-    # restart: always
-    ports:
-      - '6379:6379'
-    # command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
-    volumes: 
-      - cache:/data
-
-volumes:
-  cache:
-    driver: local
+    restart: on-failure

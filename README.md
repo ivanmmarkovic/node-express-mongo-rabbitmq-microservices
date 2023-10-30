@@ -1,5 +1,13 @@
 # node-express-mongo-rabbitmq-redis-microservices
 
+Microservices application in Node.js/Express.js
+
+- API gateway service handle all requests and authentication.
+- Synchronous communication with HTTP protocol.
+- Asynchronous communication with RabbitMQ.
+- JWT authentication
+- Redis for caching
+- Rate limiter
 
 You can access application on http://localhost:8080.
 To test all routes, there is a Postman collection.
@@ -70,13 +78,16 @@ apiToPostsChannel.consume(postsToApiQueue, data => {
 ```
 
 Caching is added to api gateway. 
+
 Implemented proper error handling.
+
 Implemented rate limiter - clients can't make more than 5 requests for less than 10 seconds.
 
 
 
 ### Todo
 - Add admin
+- Add separate (SQL)database for users microservice
 - Minio for files
 - Move jwt key in .env file
 - Add comments microservice

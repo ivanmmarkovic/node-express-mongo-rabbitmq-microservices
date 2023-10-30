@@ -60,7 +60,6 @@ const patchUserById = async (req, res, next) => {
             req.body.password = await bcrypt.hash(req.body.password, 10);
         }
         let user = await UserModel.findByIdAndUpdate(id, req.body, {new: true});
-        console.log(user);
         return res.status(200).json({responseData: user, errorMessage: null});
     } catch (error) {
         let [status, message] = handleErrors(error);
