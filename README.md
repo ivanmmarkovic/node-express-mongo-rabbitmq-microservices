@@ -2,6 +2,8 @@
 
 Microservices application in Node.js/Express.js
 
+![alt text](https://github.com/ivanmmarkovic/misc/blob/9e38b521afa94544a90424e97615a16774cfd815/images-microservices-app/my-microservice-project.png)
+
 - API gateway service handle all requests and authentication.
 - Synchronous communication with HTTP protocol.
 - Asynchronous communication with RabbitMQ.
